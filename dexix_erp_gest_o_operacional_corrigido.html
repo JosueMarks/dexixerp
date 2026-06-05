@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dexix ERP - Gestão Operacional</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
+
+    <div id="app" class="p-8">
+        <h1 class="text-3xl font-bold mb-6 text-emerald-400">Dashboard Dexix</h1>
+        <div id="content" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Os dados serão carregados pelo script abaixo -->
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Dados da Aplicação
+         */
+        const dados = {
+            "empresa": "Dexix Comunicação",
+            "versao": "1.0.0",
+            "metricas": {
+                "faturamento_mensal": 45000.50,
+                "ordens_ativas": 12,
+                "insumos_criticos": 3
+            }
+        };
+
+        /**
+         * Lógica de renderização com tratamento de erros
+         */
+        function carregarDashboard() {
+            const container = document.getElementById('content');
+            if (!container) return;
+
+            // Formatação segura de moeda
+            const formatarMoeda = (valor) => {
+                return new Intl.NumberFormat('pt-PT', {
+                    style: 'currency',
+                    currency: 'EUR' // Ajuste para 'BRL' se preferir Reais
+                }).format(valor);
+            };
+
+            container.innerHTML = `
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
+                    <h2 class="text-xl text-emerald-400 font-semibold mb-2">Faturamento</h2>
+                    <p class="text-2xl font-black">${formatarMoeda(dados.metricas.faturamento_mensal)}</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
+                    <h2 class="text-xl text-emerald-400 font-semibold mb-2">Ordens Ativas</h2>
+                    <p class="text-2xl font-black">${dados.metricas.ordens_ativas}</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
+                    <h2 class="text-xl text-emerald-400 font-semibold mb-2">Estado</h2>
+                    <p class="text-lg font-bold">${dados.empresa}</p>
+                    <p class="text-sm text-slate-400">Versão: ${dados.versao}</p>
+                </div>
+            `;
+        }
+
+        // Iniciar aplicação ao carregar a página
+        document.addEventListener('DOMContentLoaded', carregarDashboard);
+    </script>
+</body>
+</html>
